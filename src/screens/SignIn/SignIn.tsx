@@ -85,7 +85,7 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       <TopNavigation accessoryLeft={BackAction} />
       <Divider />
       <Layout style={styles.container}>
-        <ScrollView scrollEnabled={false}>
+        <ScrollView>
           <Text category="h6">{I18n.t('signIn.userForm.caption')}</Text>
           <Layout style={styles.form}>
             <Input
