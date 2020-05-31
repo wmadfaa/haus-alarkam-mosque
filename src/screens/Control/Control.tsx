@@ -20,7 +20,7 @@ const ControlScreen: React.FC<Props> = () => {
   return (
     <ScreenContainer level="1">
       <Image
-        source={require('../../assets/images/logo1.png')}
+        source={require('../../assets/images/logo.png')}
         style={styles.logo}
       />
       <Layout style={styles.container} level="1">

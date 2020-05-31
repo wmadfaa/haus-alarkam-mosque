@@ -51,7 +51,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (
     <ScreenContainer level="2">
       <Image
-        source={require('../../assets/images/logo1.png')}
+        source={require('../../assets/images/logo.png')}
         style={styles.logo}
       />
       <Text category="s1" style={styles.listCaption}>

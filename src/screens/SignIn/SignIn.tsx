@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ImageProps} from 'react-native';
-import I18n from '../../utils/i18n';
+import I18n, {isRTL} from '../../utils/i18n';
 import {
   TopNavigationAction,
   Icon,
@@ -57,7 +57,12 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
 
   const BackAction = () => {
     const BackIcon: RenderProp<Partial<ImageProps>> = (props) => (
-      <Icon {...props} name="arrow-back" />
+      // note: should apply RTL to icons
+      <Icon
+        {...props}
+        style={[props?.style, {transform: [{scaleX: isRTL ? -1 : 1}]}]}
+        name="arrow-back"
+      />
     );
     return (
       <TopNavigationAction

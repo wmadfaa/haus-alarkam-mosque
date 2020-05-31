@@ -27,4 +27,6 @@ I18n.start = I18nManager.isRTL ? 'right' : 'left';
 // @ts-ignore
 I18n.end = I18nManager.isRTL ? 'left' : 'right';
 
+export const isRTL = I18nManager.isRTL;
+
 export default I18n;
