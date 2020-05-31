@@ -1,4 +1,5 @@
 import React from 'react';
+import I18n from '../../utils/i18n';
 import {Layout, Button, Text} from '@ui-kitten/components';
 
 import {ScreenNavigationProp} from '../../utils/ScreenProps';
@@ -24,15 +25,17 @@ const ControlScreen: React.FC<Props> = () => {
       />
       <Layout style={styles.container} level="1">
         <Text category="p1" style={styles.infoCation}>
-          remaining for the friday prayer time
+          {I18n.t('control.info.caption')}
         </Text>
         <Text category="h5">2 days/ 3 hours/ 30 minutes</Text>
       </Layout>
       <Layout level="1" style={styles.actions}>
         <Button status="danger" style={styles.actionButton}>
-          Sign out
+          {I18n.t('actions.signOut')}
         </Button>
-        <Button style={styles.actionButton}>Select another time</Button>
+        <Button style={styles.actionButton}>
+          {I18n.t('actions.SelectAnotherTime')}
+        </Button>
       </Layout>
     </ScreenContainer>
   );

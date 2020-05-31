@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image} from 'react-native';
+import I18n from '../../utils/i18n';
 import {Text, Button} from '@ui-kitten/components';
 
 import {ScreenNavigationProp} from '../../utils/ScreenProps';
@@ -41,8 +42,6 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     };
   }, []);
 
-  console.log(state);
-
   const onRefresh = () => {};
 
   const handleOnSelect = () => {
@@ -56,11 +55,11 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         style={styles.logo}
       />
       <Text category="s1" style={styles.listCaption}>
-        Friday Prayer times 2020/12/3
+        {`${I18n.t('home.timesList.caption')} 2020/12/3`}
       </Text>
       <TimesList onSelect={handleOnSelect} />
       <Button style={styles.refreshBtn} onPress={onRefresh}>
-        Refresh
+        {I18n.t('actions.refresh')}
       </Button>
     </ScreenContainer>
   );

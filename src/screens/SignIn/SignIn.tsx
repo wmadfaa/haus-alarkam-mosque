@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ImageProps} from 'react-native';
+import I18n from '../../utils/i18n';
 import {
   TopNavigationAction,
   Icon,
@@ -78,27 +79,29 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       <TopNavigation accessoryLeft={BackAction} />
       <Divider />
       <Layout style={styles.container}>
-        <Text category="h6">Please Enter Your Data to Sign in!</Text>
+        <Text category="h6">{I18n.t('signIn.userForm.caption')}</Text>
         <Layout style={styles.form}>
           <Input
             style={styles.input}
             value={form.firstName}
-            label="First name"
-            placeholder="Place your first name"
+            label={I18n.t('signIn.userForm.inputs.firstName.label')}
+            placeholder={I18n.t('signIn.userForm.inputs.firstName.placeholder')}
             onChangeText={onFormChange('firstName')}
           />
           <Input
             style={styles.input}
             value={form.lastName}
-            label="Last name"
-            placeholder="Place your last name"
+            label={I18n.t('signIn.userForm.inputs.lastName.label')}
+            placeholder={I18n.t('signIn.userForm.inputs.lastName.placeholder')}
             onChangeText={onFormChange('lastName')}
           />
           <Input
             style={styles.input}
             value={form.phoneNumber}
-            label="Phone number"
-            placeholder="Place your Phone number"
+            label={I18n.t('signIn.userForm.inputs.phoneNumber.label')}
+            placeholder={I18n.t(
+              'signIn.userForm.inputs.phoneNumber.placeholder',
+            )}
             onChangeText={onFormChange('phoneNumber')}
           />
           <CheckBox
@@ -107,7 +110,7 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
             onChange={(nextChecked) =>
               setState((prev) => ({...prev, saveDataOnSubmit: nextChecked}))
             }>
-            Remember me
+            {I18n.t('signIn.userForm.inputs.rememberMe.label')}
           </CheckBox>
         </Layout>
       </Layout>
@@ -116,7 +119,7 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
         onPress={onSubmit}
         // disabled={!state.canSubmit}
       >
-        Sign in
+        {I18n.t('actions.signIn')}
       </Button>
     </ScreenContainer>
   );
