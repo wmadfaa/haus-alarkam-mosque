@@ -33,7 +33,7 @@ const TimesList: React.FC<TimesListProps> = ({onSelect}) => {
     return (
       <ListItem
         title={I18n.t('home.timesList.time', {
-          index,
+          index: index + 1,
           time: item.time,
         })}
         description={I18n.t('home.timesList.places', {
