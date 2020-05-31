@@ -2,6 +2,8 @@ export default {
   home: {
     timesList: {
       caption: 'Friday Prayer times',
+      time: 'time {{index}}: {{time}}',
+      places: '{{places}} places available',
     },
   },
   signIn: {
@@ -36,5 +38,6 @@ export default {
     signIn: 'Sign in',
     signOut: 'Sign out',
     SelectAnotherTime: 'Select another time',
+    select: 'Select',
   },
 };

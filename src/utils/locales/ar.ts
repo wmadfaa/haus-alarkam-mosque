@@ -2,6 +2,8 @@ export default {
   home: {
     timesList: {
       caption: 'مواعيد صلاة الجمعة',
+      time: '{{time}} :{{index}} الموعد',
+      places: 'أماكن المتاحة {{places}}',
     },
   },
   signIn: {
@@ -36,5 +38,6 @@ export default {
     signIn: 'تسجيل الدخول',
     signOut: 'تسجيل الخروج',
     SelectAnotherTime: 'اختيار وقت آخر',
+    select: 'اختار',
   },
 };

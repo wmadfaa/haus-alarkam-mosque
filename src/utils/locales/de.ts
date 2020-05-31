@@ -2,6 +2,8 @@ export default {
   home: {
     timesList: {
       caption: 'Freitagsgebetszeiten',
+      time: 'Termin {{index}}: {{time}}',
+      places: '{{places}} Verfügbare Plätze',
     },
   },
   signIn: {
@@ -36,5 +38,6 @@ export default {
     signIn: 'Anmelden',
     signOut: 'Ausloggen',
     SelectAnotherTime: 'Wählen Sie eine andere Zeit',
+    select: 'Wählen',
   },
 };
