@@ -4,4 +4,7 @@ export default StyleSheet.create({
   root: {
     flex: 1,
   },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
 });

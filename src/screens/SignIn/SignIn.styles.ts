@@ -15,6 +15,7 @@ export default StyleSheet.create({
   },
   input: {
     marginVertical: 8,
+    paddingVertical: 8,
   },
   checkbox: {
     marginVertical: 16,

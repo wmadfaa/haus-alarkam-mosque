@@ -20,6 +20,7 @@ import {MainStackParams, ROUTES} from '../../configs/navigator.configs';
 import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 
 import styles from './SignIn.styles';
+import {ScrollView} from 'react-native-gesture-handler';
 
 interface Props extends ScreenNavigationProp<MainStackParams, ROUTES.SIGN_IN> {}
 
@@ -84,46 +85,51 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       <TopNavigation accessoryLeft={BackAction} />
       <Divider />
       <Layout style={styles.container}>
-        <Text category="h6">{I18n.t('signIn.userForm.caption')}</Text>
-        <Layout style={styles.form}>
-          <Input
-            style={styles.input}
-            value={form.firstName}
-            label={I18n.t('signIn.userForm.inputs.firstName.label')}
-            placeholder={I18n.t('signIn.userForm.inputs.firstName.placeholder')}
-            onChangeText={onFormChange('firstName')}
-          />
-          <Input
-            style={styles.input}
-            value={form.lastName}
-            label={I18n.t('signIn.userForm.inputs.lastName.label')}
-            placeholder={I18n.t('signIn.userForm.inputs.lastName.placeholder')}
-            onChangeText={onFormChange('lastName')}
-          />
-          <Input
-            style={styles.input}
-            value={form.phoneNumber}
-            label={I18n.t('signIn.userForm.inputs.phoneNumber.label')}
-            placeholder={I18n.t(
-              'signIn.userForm.inputs.phoneNumber.placeholder',
-            )}
-            onChangeText={onFormChange('phoneNumber')}
-          />
-          <CheckBox
-            style={styles.checkbox}
-            checked={state.saveDataOnSubmit}
-            onChange={(nextChecked) =>
-              setState((prev) => ({...prev, saveDataOnSubmit: nextChecked}))
-            }>
-            {I18n.t('signIn.userForm.inputs.rememberMe.label')}
-          </CheckBox>
-        </Layout>
+        <ScrollView scrollEnabled={false}>
+          <Text category="h6">{I18n.t('signIn.userForm.caption')}</Text>
+          <Layout style={styles.form}>
+            <Input
+              style={styles.input}
+              value={form.firstName}
+              label={I18n.t('signIn.userForm.inputs.firstName.label')}
+              placeholder={I18n.t(
+                'signIn.userForm.inputs.firstName.placeholder',
+              )}
+              onChangeText={onFormChange('firstName')}
+            />
+            <Input
+              style={styles.input}
+              value={form.lastName}
+              label={I18n.t('signIn.userForm.inputs.lastName.label')}
+              placeholder={I18n.t(
+                'signIn.userForm.inputs.lastName.placeholder',
+              )}
+              onChangeText={onFormChange('lastName')}
+            />
+            <Input
+              style={styles.input}
+              value={form.phoneNumber}
+              label={I18n.t('signIn.userForm.inputs.phoneNumber.label')}
+              placeholder={I18n.t(
+                'signIn.userForm.inputs.phoneNumber.placeholder',
+              )}
+              onChangeText={onFormChange('phoneNumber')}
+            />
+            <CheckBox
+              style={styles.checkbox}
+              checked={state.saveDataOnSubmit}
+              onChange={(nextChecked) =>
+                setState((prev) => ({...prev, saveDataOnSubmit: nextChecked}))
+              }>
+              {I18n.t('signIn.userForm.inputs.rememberMe.label')}
+            </CheckBox>
+          </Layout>
+        </ScrollView>
       </Layout>
       <Button
         style={styles.submitButton}
         onPress={onSubmit}
-        // disabled={!state.canSubmit}
-      >
+        disabled={!state.canSubmit}>
         {I18n.t('actions.signIn')}
       </Button>
     </ScreenContainer>

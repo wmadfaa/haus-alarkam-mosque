@@ -1,4 +1,5 @@
 import React from 'react';
+import {KeyboardAvoidingView} from 'react-native';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {Layout, LayoutProps} from '@ui-kitten/components';
 
@@ -13,20 +14,25 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({
 }) => {
   const edgeInsets = useSafeArea();
   return (
-    <Layout
-      style={[
-        styles.root,
-        {
-          paddingTop: edgeInsets.top,
-          paddingBottom: edgeInsets.bottom,
-          paddingLeft: edgeInsets.left,
-          paddingRight: edgeInsets.right,
-        },
-        style,
-      ]}
-      {...props}>
-      {children}
-    </Layout>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={-500}
+      behavior="padding"
+      style={styles.keyboardAvoidingView}>
+      <Layout
+        style={[
+          styles.root,
+          {
+            paddingTop: edgeInsets.top,
+            paddingBottom: edgeInsets.bottom,
+            paddingLeft: edgeInsets.left,
+            paddingRight: edgeInsets.right,
+          },
+          style,
+        ]}
+        {...props}>
+        {children}
+      </Layout>
+    </KeyboardAvoidingView>
   );
 };
 
