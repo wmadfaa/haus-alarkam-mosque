@@ -9,22 +9,29 @@ const data = new Array(2).fill({
   description: 'Description for Item',
 });
 
-export interface TimesListProps {}
+export interface TimesListProps {
+  onSelect(id: string): void;
+}
 
-const TimesList: React.FC<TimesListProps> = () => {
-  const renderItemAccessory = () => (
-    <Button status="basic" size="small">
-      Select
-    </Button>
-  );
+const TimesList: React.FC<TimesListProps> = ({onSelect}) => {
+  const renderItem: ListRenderItem<any> = ({item, index}) => {
+    const handleOnPress = () => onSelect(`${index}`);
 
-  const renderItem: ListRenderItem<any> = ({item, index}) => (
-    <ListItem
-      title={`${item.title} ${index + 1}`}
-      description={`${item.description} ${index + 1}`}
-      accessoryRight={renderItemAccessory}
-    />
-  );
+    const renderItemAccessory = () => (
+      <Button status="basic" size="small" onPress={handleOnPress}>
+        Select
+      </Button>
+    );
+
+    return (
+      <ListItem
+        title={`${item.title} ${index + 1}`}
+        description={`${item.description} ${index + 1}`}
+        accessoryRight={renderItemAccessory}
+        onPress={handleOnPress}
+      />
+    );
+  };
 
   return (
     <List

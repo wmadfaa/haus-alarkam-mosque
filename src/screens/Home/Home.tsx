@@ -19,7 +19,7 @@ interface State {
   loading: boolean;
 }
 
-const HomeScreen: React.FC<Props> = () => {
+const HomeScreen: React.FC<Props> = ({navigation}) => {
   const [state, setState] = useState<State>({
     times: [],
     loading: true,
@@ -45,6 +45,10 @@ const HomeScreen: React.FC<Props> = () => {
 
   const onRefresh = () => {};
 
+  const handleOnSelect = () => {
+    navigation.navigate(ROUTES.SIGN_IN);
+  };
+
   return (
     <ScreenContainer level="2">
       <Image
@@ -54,7 +58,7 @@ const HomeScreen: React.FC<Props> = () => {
       <Text category="s1" style={styles.listCaption}>
         Friday Prayer times 2020/12/3
       </Text>
-      <TimesList />
+      <TimesList onSelect={handleOnSelect} />
       <Button style={styles.refreshBtn} onPress={onRefresh}>
         Refresh
       </Button>
