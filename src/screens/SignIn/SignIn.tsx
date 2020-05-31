@@ -69,7 +69,9 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
   const onFormChange = (name: keyof UserForm) => (nextValue: string) =>
     setForm((prev) => ({...prev, [name]: nextValue}));
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    navigation.navigate(ROUTES.CONTROL);
+  };
 
   return (
     <ScreenContainer level="1">
@@ -112,7 +114,8 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       <Button
         style={styles.submitButton}
         onPress={onSubmit}
-        disabled={!state.canSubmit}>
+        // disabled={!state.canSubmit}
+      >
         Sign in
       </Button>
     </ScreenContainer>
