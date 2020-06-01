@@ -2,8 +2,8 @@ export default {
   home: {
     timesList: {
       caption: 'مواعيد صلاة الجمعة',
-      time: '{{time}} :{{index}} الموعد',
-      places: 'أماكن المتاحة {{places}}',
+      time: 'الموعد {{index}}: {{time}}',
+      places: 'الأماكن المتاحة {{places}}',
     },
   },
   signIn: {

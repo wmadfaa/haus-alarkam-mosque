@@ -1,5 +1,5 @@
 import React from 'react';
-import I18n from '../../utils/i18n';
+import I18n, {moment, localNumber} from '../../utils/i18n';
 import {Button, List, ListItem, Divider} from '@ui-kitten/components';
 
 import styles from './TimesList.styles';
@@ -7,11 +7,11 @@ import {ListRenderItem} from 'react-native';
 
 const data = [
   {
-    time: '11:30',
+    time: new Date(),
     places: 12,
   },
   {
-    time: '13:30',
+    time: new Date(),
     places: 60,
   },
 ];
@@ -33,8 +33,8 @@ const TimesList: React.FC<TimesListProps> = ({onSelect}) => {
     return (
       <ListItem
         title={I18n.t('home.timesList.time', {
-          index: index + 1,
-          time: item.time,
+          index: localNumber.format(index + 1),
+          time: moment(item.time).format('LT'),
         })}
         description={I18n.t('home.timesList.places', {
           places: item.places,

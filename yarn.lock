@@ -979,7 +979,7 @@
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.36.tgz#17ce0a235e9ffbcdcdf5095646b374c2bf615a4c"
   integrity sha512-7TUK/k2/QGpEAv/BCwSHlYu3NXZhQ9ZwBYpzr9tjlPIL2C5BeGhH3DmVavRx3ZNyELX5TLC91JTz/cen6AAtIQ==
 
-"@types/i18n-js@*", "@types/i18n-js@^3.0.3":
+"@types/i18n-js@*":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.3.tgz#84f66fb969741fecd91b854387e0682aa7fd70b7"
   integrity sha512-GiZzazvxQ5j+EA4Zf4MtDsSaokAR/gW7FxxTlHi2p2xKFUhwAUT0B/MB8WL77P1TcqAO3MefWorFFyZS8F7s0Q==
@@ -3214,11 +3214,6 @@ i18n-js@3.0.11:
   resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.0.11.tgz#f9e96bdb641c5b9d6be12759d7c422089987ef02"
   integrity sha512-v7dG3kYJTQTyox3NqDabPDE/ZotWntyMI9kh4cYi+XlCSnsIR+KBTS2opPyObL8WndnklcLzbNU92FP/mLge3Q==
 
-i18n-js@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.7.0.tgz#84bf7706610f8a2589b3d6b15083a0a38a33dcb7"
-  integrity sha512-t5E5iiEqnkb3vy27V73dU3vcjDlmzbusKC5sXcGFOhte3b2BieVLu+qX1kRlyty9QfZADW3iZUSqeeUS9sal5w==
-
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -3337,6 +3332,11 @@ internal-slot@^1.0.2:
     es-abstract "^1.17.0-next.1"
     has "^1.0.3"
     side-channel "^1.0.2"
+
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+  integrity sha1-giRKIZDE5Bn4Nx9ao02qNCDiq94=
 
 invariant@^2.2.4:
   version "2.2.4"
@@ -4421,6 +4421,11 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.26.0:
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.26.0.tgz#5e1f82c6bafca6e83e808b30c8705eed0dcbd39a"
+  integrity sha512-oIixUO+OamkUkwjhAVE18rAMfRJNsNe/Stid/gwHSOfHrOtw9EhAY2AHvdKZ/k/MggcYELFCJz/Sn2pL8b8JMw==
+
 morgan@^1.9.1:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.10.0.tgz#091778abc1fc47cd3509824653dae1faab6b17d7"
@@ -5133,6 +5138,11 @@ react-native-reanimated@^1.9.0:
   integrity sha512-Aj+spgIHRiVv7ezGADxnSH1EoKrQRD2+XaSiGY0MiB/pvRNNrZPSJ+3NVpvLwWf9lZMOP7dwqqyJIzoZgBDt8w==
   dependencies:
     fbjs "^1.0.0"
+
+react-native-restart@^0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.17.tgz#c1f38e019d1a2114248d496698e7951e9435ba91"
+  integrity sha512-UwFPDssMFoyDbF2aLARIHWt5g/o0TtxCXK9WIY+0iNpkgG9qWd+n80XBwXioNCdgy39ZQ5yfJBJRwtMLDgABag==
 
 react-native-safe-area-context@^3.0.2:
   version "3.0.2"
