@@ -1,19 +1,26 @@
 import {combineReducers, Dispatch} from 'redux';
-import {all} from 'redux-saga/effects';
-import {FriendsState, FriendsAction, FriendsReducer} from './user';
+import {all, fork} from 'redux-saga/effects';
+import {UserState, UserAction, UserReducer, userRootSaga} from './user';
+import {
+  GlobalState,
+  GlobalStateAction,
+  GlobalStateReducer,
+} from './globalState';
 
 export interface ApplicationState {
-  user: FriendsState;
+  global: GlobalState;
+  user: UserState;
 }
 
-export type ApplicationAction = FriendsAction;
+export type ApplicationAction = UserAction | GlobalStateAction;
 
 export type ApplicationDispatch = Dispatch<ApplicationAction>;
 
 export const RootReducer = combineReducers({
-  user: FriendsReducer,
+  user: UserReducer,
+  global: GlobalStateReducer,
 });
 
 export function* RootSaga() {
-  yield all([]);
+  yield all([fork(userRootSaga)]);
 }

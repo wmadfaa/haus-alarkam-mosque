@@ -16,7 +16,7 @@ export type ApplicationStore = Store<ApplicationState, ApplicationAction>;
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['jokes'],
+  blacklist: ['global'],
 };
 
 export default function configureStore(): {

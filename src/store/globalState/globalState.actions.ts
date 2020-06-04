@@ -12,3 +12,6 @@ export const removeErrorState = (state: States) =>
 
 export const setCancelState = (state: States, value: State['canceled']) =>
   action(GlobalStateActionTypes.SET_CANCEL_STATE, {state, value});
+
+export const resetState = (state: States) =>
+  action(GlobalStateActionTypes.RESET_STATE, {state});

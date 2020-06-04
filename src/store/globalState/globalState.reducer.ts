@@ -27,6 +27,11 @@ export const initialState: GlobalState = {
     canceled: false,
     error: null,
   },
+  deleteUserProfile: {
+    loading: false,
+    canceled: false,
+    error: null,
+  },
 };
 
 const reducer: Reducer<GlobalState, GlobalStateAction> = (
@@ -54,6 +59,12 @@ const reducer: Reducer<GlobalState, GlobalStateAction> = (
     }
     case GlobalStateActionTypes.REMOVE_ERROR_STATE: {
       return mergeState({...state}, {[action.payload]: {error: null}});
+    }
+    case GlobalStateActionTypes.RESET_STATE: {
+      return mergeState(
+        {...state},
+        {[action.payload.state]: initialState[action.payload.state]},
+      );
     }
     default: {
       return state;

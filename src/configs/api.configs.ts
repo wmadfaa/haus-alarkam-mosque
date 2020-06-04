@@ -1,3 +1,4 @@
+import {AbortSignal} from 'abort-controller';
 import mockApi from './api.mock.json';
 
 function mockTimeOut(abort: AbortSignal, shouldFail: boolean = false) {
@@ -45,7 +46,7 @@ export async function getFridayPrayingForUser(
 export async function createPrayer(
   abort: AbortSignal,
   _data: {
-    phone: string;
+    phoneNumber: string;
     firstName: string;
     lastName: string;
     reservePrayingTime: Date;
@@ -53,10 +54,26 @@ export async function createPrayer(
   },
 ) {
   try {
-    const result = await mockTimeOut(abort);
-    if (result) {
-      return mockApi['create-prayer'].post;
-    }
+    await mockTimeOut(abort);
+    return mockApi['create-prayer'].post;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function updatePrayer(
+  abort: AbortSignal,
+  _data: {
+    phoneNumber?: string;
+    firstName?: string;
+    lastName?: string;
+    reservePrayingTime?: Date | null;
+    token: string;
+  },
+) {
+  try {
+    await mockTimeOut(abort);
+    return mockApi['update-prayer'].post;
   } catch (err) {
     throw err;
   }
