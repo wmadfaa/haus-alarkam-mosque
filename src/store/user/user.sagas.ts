@@ -1,25 +1,11 @@
 import AbortController from 'abort-controller';
-import {call, put, all, takeEvery, cancelled, select} from 'redux-saga/effects';
+import {call, put, all, takeEvery, cancelled} from 'redux-saga/effects';
 
-import * as selectors from '../selectors';
 import * as api from '../../configs/api.configs';
+import {getTokenAsync} from '../common.sagas';
 
 import * as globalStateActions from '../globalState/globalState.actions';
 import * as userActions from './user.actions';
-
-function* getTokenAsync() {
-  try {
-    const token: ReturnType<typeof selectors.getToken> = yield select(
-      selectors.getToken,
-    );
-    if (!token) {
-      throw new Error('token is missing');
-    }
-    return token;
-  } catch (err) {
-    throw err;
-  }
-}
 
 function* setUserProfileActionAsync({
   payload: {profile, reservePrayingTime},
@@ -180,4 +166,4 @@ function* rootSaga() {
   ]);
 }
 
-export {rootSaga as userRootSaga};
+export {rootSaga as UserRootSaga};

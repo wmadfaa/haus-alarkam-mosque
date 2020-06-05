@@ -10,7 +10,8 @@ export type States =
   | 'setUser'
   | 'updateUser'
   | 'cancelPrayingReservation'
-  | 'deleteUserProfile';
+  | 'deleteUserProfile'
+  | 'getFridayPraying';
 
 export interface State {
   readonly loading: boolean;

@@ -32,6 +32,11 @@ export const initialState: GlobalState = {
     canceled: false,
     error: null,
   },
+  getFridayPraying: {
+    loading: false,
+    canceled: false,
+    error: null,
+  },
 };
 
 const reducer: Reducer<GlobalState, GlobalStateAction> = (

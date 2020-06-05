@@ -16,7 +16,7 @@ export const setUserProfileActionAsync = createAsyncAction(
   {profile: UserProfile; reservePrayingTime: Date},
   {
     profile: UserProfile;
-    reservePrayingTime: Date;
+    reservePrayingTime: Date | null;
     creatingUserProfileDate: Date;
   },
   undefined,
