@@ -32,6 +32,6 @@ export interface UserProfile {
 export interface UserState {
   readonly token?: string;
   readonly profile?: UserProfile;
-  readonly reservePrayingTime?: Date | null;
-  readonly creatingUserProfileDate?: Date;
+  readonly reservePrayingTime?: string | null;
+  readonly creatingUserProfileDate?: string;
 }

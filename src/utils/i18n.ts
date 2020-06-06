@@ -1,14 +1,16 @@
-import {I18nManager} from 'react-native';
+import {I18nManager, Platform} from 'react-native';
 // @ts-ignore
 import moment from 'moment/min/moment-with-locales';
 import RNRestart from 'react-native-restart';
 import I18n from 'react-native-i18n';
 import * as RNLocalize from 'react-native-localize';
 
-import 'intl';
-import 'intl/locale-data/jsonp/ar';
-import 'intl/locale-data/jsonp/de';
-import 'intl/locale-data/jsonp/en';
+require('intl');
+if (Platform.OS === 'android') {
+  require('intl/locale-data/jsonp/ar');
+  require('intl/locale-data/jsonp/de');
+  require('intl/locale-data/jsonp/en');
+}
 
 import en from './locales/en';
 import de from './locales/de';

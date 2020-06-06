@@ -29,13 +29,14 @@ function* setUserProfileActionAsync({
           lastName: data.name.last,
           phoneNumber: data.phone,
         },
-        reservePrayingTime: new Date(data.reservePrayingTime),
-        creatingUserProfileDate: new Date(data.createdAt),
+        reservePrayingTime: data.reservePrayingTime,
+        creatingUserProfileDate: data.createdAt,
       }),
     );
     yield put(globalStateActions.setLoadingState('setUser', false));
   } catch (err) {
     yield put(userActions.setUserProfileActionAsync.failure());
+    yield put(globalStateActions.setLoadingState('setUser', false));
     yield put(globalStateActions.setErrorState('setUser', err));
   } finally {
     if (yield cancelled()) {
@@ -66,13 +67,14 @@ function* updateUserProfileActionAsync({
           lastName: data.name.last,
           phoneNumber: data.phone,
         },
-        reservePrayingTime: new Date(data.reservePrayingTime),
-        creatingUserProfileDate: new Date(data.createdAt),
+        reservePrayingTime: data.reservePrayingTime,
+        creatingUserProfileDate: data.createdAt,
       }),
     );
     yield put(globalStateActions.setLoadingState('updateUser', false));
   } catch (err) {
     yield put(userActions.updateUserProfileActionAsync.failure());
+    yield put(globalStateActions.setLoadingState('updateUser', false));
     yield put(globalStateActions.setErrorState('updateUser', err));
   } finally {
     if (yield cancelled()) {
@@ -97,6 +99,7 @@ function* deleteUserProfileActionAsync() {
     yield put(globalStateActions.setLoadingState('deleteUserProfile', false));
   } catch (err) {
     yield put(userActions.deleteUserProfileActionAsync.failure());
+    yield put(globalStateActions.setLoadingState('deleteUserProfile', false));
     yield put(globalStateActions.setErrorState('deleteUserProfile', err));
   } finally {
     if (yield cancelled()) {
@@ -123,7 +126,7 @@ function* cancelPrayingReservationActionAsync() {
     yield put(
       userActions.cancelPrayingReservationActionAsync.success({
         reservePrayingTime: data.reservePrayingTime
-          ? new Date(data.reservePrayingTime)
+          ? data.reservePrayingTime
           : undefined,
       }),
     );
@@ -132,6 +135,9 @@ function* cancelPrayingReservationActionAsync() {
     );
   } catch (err) {
     yield put(userActions.cancelPrayingReservationActionAsync.failure());
+    yield put(
+      globalStateActions.setLoadingState('cancelPrayingReservation', false),
+    );
     yield put(
       globalStateActions.setErrorState('cancelPrayingReservation', err),
     );

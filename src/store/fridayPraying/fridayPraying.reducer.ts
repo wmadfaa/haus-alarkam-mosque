@@ -17,7 +17,7 @@ const reducer: Reducer<FridayPrayingState, FridayPrayingAction> = (
 ) => {
   switch (action.type) {
     case FridayPrayingActionTypes.GET_FRIDAY_PRAYING_SUCCESS: {
-      return merge({...state}, {...action.payload});
+      return merge({}, state, {...action.payload});
     }
     default: {
       return state;

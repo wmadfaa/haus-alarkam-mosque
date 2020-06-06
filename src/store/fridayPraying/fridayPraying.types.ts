@@ -6,11 +6,11 @@ export enum FridayPrayingActionTypes {
 }
 
 export interface FridayPrayingTime {
-  time: Date;
+  time: string;
   personSpaceLeft: number;
 }
 
 export interface FridayPrayingState {
   times?: FridayPrayingTime[];
-  nextFridayData?: Date;
+  nextFridayData?: string;
 }

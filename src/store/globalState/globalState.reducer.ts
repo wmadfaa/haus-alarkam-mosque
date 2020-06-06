@@ -9,7 +9,7 @@ export type GlobalStateAction = ActionType<typeof GlobalStateActions>;
 const mergeState = (
   object: GlobalState,
   source: Partial<GlobalState>,
-): GlobalState => merge(object, source);
+): GlobalState => merge({}, object, source);
 
 export const initialState: GlobalState = {
   setUser: {
@@ -45,31 +45,27 @@ const reducer: Reducer<GlobalState, GlobalStateAction> = (
 ) => {
   switch (action.type) {
     case GlobalStateActionTypes.SET_LOADING_STATE: {
-      return mergeState(
-        {...state},
-        {[action.payload.state]: action.payload.value},
-      );
+      return mergeState(state, {
+        [action.payload.state]: {loading: action.payload.value},
+      });
     }
     case GlobalStateActionTypes.SET_CANCEL_STATE: {
-      return mergeState(
-        {...state},
-        {[action.payload.state]: {canceled: action.payload.value}},
-      );
+      return mergeState(state, {
+        [action.payload.state]: {canceled: action.payload.value},
+      });
     }
     case GlobalStateActionTypes.SET_ERROR_STATE: {
-      return mergeState(
-        {...state},
-        {[action.payload.state]: {error: action.payload.value}},
-      );
+      return mergeState(state, {
+        [action.payload.state]: {error: action.payload.value},
+      });
     }
     case GlobalStateActionTypes.REMOVE_ERROR_STATE: {
-      return mergeState({...state}, {[action.payload]: {error: null}});
+      return mergeState(state, {[action.payload]: {error: null}});
     }
     case GlobalStateActionTypes.RESET_STATE: {
-      return mergeState(
-        {...state},
-        {[action.payload.state]: initialState[action.payload.state]},
-      );
+      return mergeState(state, {
+        [action.payload.state]: initialState[action.payload.state],
+      });
     }
     default: {
       return state;
