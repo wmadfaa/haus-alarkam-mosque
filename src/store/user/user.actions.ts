@@ -4,7 +4,7 @@ import {UserActionTypes, UserProfile} from './user.types';
 export const setUserToken = (token: string) =>
   action(UserActionTypes.SET_USER_TOKEN, token);
 
-export const setReservePrayingTime = (time: Date) =>
+export const setReservePrayingTime = (time: string) =>
   action(UserActionTypes.SET_RESERVE_PRAYING_TIME, time);
 
 export const setUserProfileActionAsync = createAsyncAction(
@@ -13,11 +13,11 @@ export const setUserProfileActionAsync = createAsyncAction(
   UserActionTypes.SET_USER_PROFILE_FAILURE,
   UserActionTypes.SET_USER_PROFILE_CANCEL,
 )<
-  {profile: UserProfile; reservePrayingTime: Date},
+  {profile: UserProfile; reservePrayingTime: string},
   {
     profile: UserProfile;
-    reservePrayingTime: Date | null;
-    creatingUserProfileDate: Date;
+    reservePrayingTime: string | null;
+    creatingUserProfileDate: string;
   },
   undefined,
   undefined
@@ -32,8 +32,8 @@ export const updateUserProfileActionAsync = createAsyncAction(
   Partial<UserProfile>,
   {
     profile: UserProfile;
-    reservePrayingTime: Date;
-    creatingUserProfileDate: Date;
+    reservePrayingTime: string;
+    creatingUserProfileDate: string;
   },
   undefined,
   undefined
@@ -51,4 +51,4 @@ export const cancelPrayingReservationActionAsync = createAsyncAction(
   UserActionTypes.CANCEL_PRAYING_RESERVATION_SUCCESS,
   UserActionTypes.CANCEL_PRAYING_RESERVATION_FAILURE,
   UserActionTypes.CANCEL_PRAYING_RESERVATION_CANCEL,
-)<undefined, {reservePrayingTime?: Date}, undefined, undefined>();
+)<undefined, {reservePrayingTime?: string}, undefined, undefined>();

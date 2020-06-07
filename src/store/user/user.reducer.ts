@@ -1,7 +1,7 @@
 import {Reducer} from 'redux';
-import merge from 'lodash.merge';
-import omit from 'lodash.omit';
 import {ActionType} from 'typesafe-actions';
+import omit from 'lodash.omit';
+import {mergeState} from '../helpers';
 import * as UserActions from './user.actions';
 import {UserState, UserActionTypes} from './user.types';
 
@@ -14,17 +14,23 @@ const reducer: Reducer<UserState, UserAction> = (
   action,
 ) => {
   switch (action.type) {
+    case UserActionTypes.SET_USER_TOKEN: {
+      return mergeState(state, {token: action.payload});
+    }
+    case UserActionTypes.SET_RESERVE_PRAYING_TIME: {
+      return mergeState(state, {reservePrayingTime: action.payload});
+    }
     case UserActionTypes.SET_USER_PROFILE_SUCCESS: {
-      return merge({...state}, {...action.payload});
+      return mergeState(state, action.payload);
     }
     case UserActionTypes.UPDATE_USER_PROFILE_SUCCESS: {
-      return merge({...state}, {...action.payload});
+      return mergeState(state, action.payload);
     }
     case UserActionTypes.DELETE_USER_PROFILE_SUCCESS: {
-      return omit({...state}, 'profile');
+      return omit(state, 'profile');
     }
     case UserActionTypes.CANCEL_PRAYING_RESERVATION_SUCCESS: {
-      return omit({...state}, 'reservePrayingTime');
+      return omit(state, 'reservePrayingTime');
     }
     default: {
       return state;

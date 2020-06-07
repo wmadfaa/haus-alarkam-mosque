@@ -11,7 +11,7 @@ export const getFridayPrayingActionAsync = createAsyncAction(
   FridayPrayingActionTypes.GET_FRIDAY_PRAYING_CANCEL,
 )<
   undefined,
-  {times: FridayPrayingTime[]; nextFridayData: Date},
+  {times: FridayPrayingTime[]; nextFridayData: string},
   undefined,
   undefined
 >();

@@ -44,8 +44,8 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     fetchData();
   };
 
-  const handleOnSelect = () => {
-    navigation.navigate(ROUTES.SIGN_IN);
+  const handleOnSelect = (id: string) => {
+    navigation.navigate(ROUTES.SIGN_IN, {reservePrayingTime: id});
   };
 
   const LoadingIndicator: RenderProp<Partial<ImageProps>> = (props) => (

@@ -21,7 +21,7 @@ export interface TimesListProps {
 
 const TimesList: React.FC<TimesListProps> = ({times, onSelect, isLoading}) => {
   const renderItem: ListRenderItem<FridayPrayingTime> = ({item, index}) => {
-    const handleOnPress = () => onSelect(`${index}`);
+    const handleOnPress = () => onSelect(item.time);
 
     const renderItemAccessory = () => (
       <Button

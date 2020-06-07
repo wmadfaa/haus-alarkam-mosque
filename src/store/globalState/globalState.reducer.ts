@@ -1,15 +1,10 @@
 import {Reducer} from 'redux';
 import {ActionType} from 'typesafe-actions';
-import merge from 'lodash.merge';
 import * as GlobalStateActions from './globalState.actions';
 import {GlobalState, GlobalStateActionTypes} from './globalState.types';
+import {mergeState} from '../helpers';
 
 export type GlobalStateAction = ActionType<typeof GlobalStateActions>;
-
-const mergeState = (
-  object: GlobalState,
-  source: Partial<GlobalState>,
-): GlobalState => merge({}, object, source);
 
 export const initialState: GlobalState = {
   setUser: {

@@ -6,6 +6,8 @@ export enum ROUTES {
 
 export type MainStackParams = {
   [ROUTES.HOME]: undefined;
-  [ROUTES.SIGN_IN]: undefined;
+  [ROUTES.SIGN_IN]: {
+    reservePrayingTime: string;
+  };
   [ROUTES.CONTROL]: undefined;
 };

@@ -1,6 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {ImageProps} from 'react-native';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
+import {ImageProps, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
 import I18n, {isRTL} from '../../utils/i18n';
 import {
   TopNavigationAction,
@@ -12,8 +13,12 @@ import {
   Input,
   Button,
   CheckBox,
+  Spinner,
 } from '@ui-kitten/components';
 import {RenderProp} from '@ui-kitten/components/devsupport';
+
+import {ApplicationDispatch, ApplicationState} from '../../store';
+import * as UserActions from '../../store/user/user.actions';
 
 import {ScreenNavigationProp} from '../../utils/ScreenProps';
 import {MainStackParams, ROUTES} from '../../configs/navigator.configs';
@@ -22,37 +27,32 @@ import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 import Modal from '../../components/Modal/Modal';
 
 import styles from './SignIn.styles';
+import {UserProfile} from '../../store/user/user.types';
 
 interface Props extends ScreenNavigationProp<MainStackParams, ROUTES.SIGN_IN> {}
 
 interface State {
-  loading: boolean;
+  submitting: boolean;
   canSubmit: boolean;
   saveDataOnSubmit: boolean;
   showModal: boolean;
 }
 
-interface UserForm {
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-}
-
-const SignInScreen: React.FC<Props> = ({navigation}) => {
+const SignInScreen: React.FC<Props> = ({navigation, route}) => {
   const refs = useRef({
     firstName: useRef<Input>(null),
     lastName: useRef<Input>(null),
     phoneNumber: useRef<Input>(null),
   });
   const [state, setState] = useState<State>({
-    loading: false,
+    submitting: false,
     canSubmit: true,
     saveDataOnSubmit: false,
     showModal: false,
   });
   const [{form, errors}, setForm] = useState<{
-    form: UserForm;
-    errors: {[key in keyof UserForm]?: string};
+    form: Partial<UserProfile>;
+    errors: {[key in keyof UserProfile]?: string};
   }>({
     errors: {
       firstName: undefined,
@@ -65,6 +65,11 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       phoneNumber: undefined,
     },
   });
+
+  const dispatch = useDispatch<ApplicationDispatch>();
+  const {loading} = useSelector(
+    (applicationState: ApplicationState) => applicationState.global.setUser,
+  );
 
   useEffect(() => {
     if (form.firstName && form.lastName && form.phoneNumber) {
@@ -90,7 +95,7 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
     );
   };
 
-  const onFormChange = (name: keyof UserForm) => (nextValue: string) =>
+  const onFormChange = (name: keyof UserProfile) => (nextValue: string) =>
     setForm((prev) => ({
       ...prev,
       form: {...prev.form, [name]: nextValue},
@@ -101,14 +106,38 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
     }));
 
   const onSubmit = () => {
-    closeModal();
-    navigation.navigate(ROUTES.CONTROL);
+    if (form.firstName && form.lastName && form.phoneNumber) {
+      setState((prev) => ({...prev, submitting: true}));
+      closeModal();
+      const profile: UserProfile = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phoneNumber: form.phoneNumber,
+      };
+      dispatch(
+        UserActions.setUserProfileActionAsync.request({
+          profile,
+          reservePrayingTime: route.params.reservePrayingTime,
+        }),
+      );
+    }
   };
+
+  const onSubmitted = useCallback(() => {
+    setState((prev) => ({...prev, submitting: false}));
+    navigation.navigate(ROUTES.CONTROL);
+  }, [navigation]);
+
+  useEffect(() => {
+    if (!loading && state.submitting) {
+      onSubmitted();
+    }
+  }, [loading, onSubmitted, state.submitting]);
 
   const openModal = () => {
     let hasError = false;
     for (const key in form) {
-      const current = key as keyof UserForm;
+      const current = key as keyof UserProfile;
       if (!form[current]) {
         hasError = true;
         setForm((prev) => ({
@@ -145,6 +174,16 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       to.focus();
     }
   };
+
+  const LoadingIndicator: RenderProp<Partial<ImageProps>> = (props) => (
+    <>
+      {loading && (
+        <View style={[props?.style, styles.indicator]}>
+          <Spinner size="small" status="primary" />
+        </View>
+      )}
+    </>
+  );
 
   return (
     <ScreenContainer level="1">
@@ -228,8 +267,10 @@ const SignInScreen: React.FC<Props> = ({navigation}) => {
       </Layout>
       <Button
         style={styles.submitButton}
+        status="primary"
         onPress={openModal}
-        disabled={!state.canSubmit}>
+        disabled={!state.canSubmit || loading}
+        accessoryLeft={LoadingIndicator}>
         {I18n.t('actions.signIn')}
       </Button>
       <Modal

@@ -1,6 +1,6 @@
 import {Reducer} from 'redux';
-import merge from 'lodash.merge';
 import {ActionType} from 'typesafe-actions';
+import {mergeState} from '../helpers';
 import * as FridayPrayingActions from './fridayPraying.actions';
 import {
   FridayPrayingState,
@@ -17,7 +17,7 @@ const reducer: Reducer<FridayPrayingState, FridayPrayingAction> = (
 ) => {
   switch (action.type) {
     case FridayPrayingActionTypes.GET_FRIDAY_PRAYING_SUCCESS: {
-      return merge({}, state, {...action.payload});
+      return mergeState(state, action.payload);
     }
     default: {
       return state;

@@ -12,10 +12,6 @@ import {Image} from 'react-native';
 
 interface Props extends ScreenNavigationProp<MainStackParams, ROUTES.CONTROL> {}
 
-interface State {
-  loading: boolean;
-}
-
 const ControlScreen: React.FC<Props> = () => {
   return (
     <ScreenContainer level="1">

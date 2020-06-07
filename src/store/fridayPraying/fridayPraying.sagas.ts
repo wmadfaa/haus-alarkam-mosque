@@ -1,6 +1,8 @@
 import AbortController from 'abort-controller';
-import {all, fork} from 'redux-saga/effects';
+
 import {
+  all,
+  fork,
   call,
   put,
   takeLatest,
@@ -36,6 +38,7 @@ function* getFridayPrayingActionAsync() {
           token,
         });
         data = settings;
+        yield put(userActions.setUserToken(prayer.token));
         yield put(
           userActions.setUserProfileActionAsync.success({
             profile: {
@@ -51,9 +54,10 @@ function* getFridayPrayingActionAsync() {
         );
       } else {
         const {
-          data: {settings},
+          data: {settings, prayer},
         } = yield call(api.getFridayPraying, signal);
         data = settings;
+        yield put(userActions.setUserToken(prayer.token));
       }
       yield put(
         FridayPrayingActions.getFridayPrayingActionAsync.success({

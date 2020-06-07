@@ -49,7 +49,7 @@ export async function createPrayer(
     phoneNumber: string;
     firstName: string;
     lastName: string;
-    reservePrayingTime: Date;
+    reservePrayingTime: string;
     token: string;
   },
 ) {
@@ -67,7 +67,7 @@ export async function updatePrayer(
     phoneNumber?: string;
     firstName?: string;
     lastName?: string;
-    reservePrayingTime?: Date | null;
+    reservePrayingTime?: string | null;
     token: string;
   },
 ) {
