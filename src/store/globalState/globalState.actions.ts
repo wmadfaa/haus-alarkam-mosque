@@ -1,6 +1,9 @@
 import {action} from 'typesafe-actions';
 import {GlobalStateActionTypes, States, State} from './globalState.types';
 
+export const setRememberUser = (value: boolean) =>
+  action(GlobalStateActionTypes.SET_REMEMBER_USER, value);
+
 export const setLoadingState = (state: States, value: State['loading']) =>
   action(GlobalStateActionTypes.SET_LOADING_STATE, {state, value});
 

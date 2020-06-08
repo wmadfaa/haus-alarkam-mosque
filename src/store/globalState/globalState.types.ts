@@ -1,4 +1,5 @@
 export enum GlobalStateActionTypes {
+  SET_REMEMBER_USER = '@@globalState/SET_REMEMBER_USER',
   SET_LOADING_STATE = '@@globalState/SET_LOADING_STATE',
   SET_ERROR_STATE = '@@globalState/SET_ERROR_STATE',
   REMOVE_ERROR_STATE = '@@globalState/REMOVE_ERROR_STATE',
@@ -19,4 +20,6 @@ export interface State {
   readonly error: Error | null;
 }
 
-export type GlobalState = Record<States, State>;
+export type GlobalState = Record<States, State> & {
+  rememberUser: boolean;
+};

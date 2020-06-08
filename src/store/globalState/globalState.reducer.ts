@@ -7,6 +7,7 @@ import {mergeState} from '../helpers';
 export type GlobalStateAction = ActionType<typeof GlobalStateActions>;
 
 export const initialState: GlobalState = {
+  rememberUser: false,
   setUser: {
     loading: false,
     canceled: false,
@@ -39,6 +40,11 @@ const reducer: Reducer<GlobalState, GlobalStateAction> = (
   action,
 ) => {
   switch (action.type) {
+    case GlobalStateActionTypes.SET_REMEMBER_USER: {
+      return mergeState(state, {
+        rememberUser: action.payload,
+      });
+    }
     case GlobalStateActionTypes.SET_LOADING_STATE: {
       return mergeState(state, {
         [action.payload.state]: {loading: action.payload.value},

@@ -21,7 +21,6 @@ export default StyleSheet.create({
     marginVertical: 16,
   },
   submitButton: {
-    marginHorizontal: 8,
     marginVertical: 16,
   },
   indicator: {

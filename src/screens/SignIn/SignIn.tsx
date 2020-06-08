@@ -2,12 +2,8 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {ImageProps, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
-import I18n, {isRTL} from '../../utils/i18n';
+import I18n from '../../utils/i18n';
 import {
-  TopNavigationAction,
-  Icon,
-  Divider,
-  TopNavigation,
   Layout,
   Text,
   Input,
@@ -19,17 +15,26 @@ import {RenderProp} from '@ui-kitten/components/devsupport';
 
 import {ApplicationDispatch, ApplicationState} from '../../store';
 import * as UserActions from '../../store/user/user.actions';
+import * as GlobalActions from '../../store/globalState/globalState.actions';
 
-import {ScreenNavigationProp} from '../../utils/ScreenProps';
-import {MainStackParams, ROUTES} from '../../configs/navigator.configs';
+import {NestedScreenNavigationProp} from '../../utils/ScreenProps';
+import {
+  SignInStackParams,
+  ROUTES,
+  MainStackParams,
+} from '../../configs/navigator.configs';
 
-import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 import Modal from '../../components/Modal/Modal';
 
 import styles from './SignIn.styles';
 import {UserProfile} from '../../store/user/user.types';
 
-interface Props extends ScreenNavigationProp<MainStackParams, ROUTES.SIGN_IN> {}
+interface Props
+  extends NestedScreenNavigationProp<
+    MainStackParams,
+    SignInStackParams,
+    ROUTES.SIGN_IN_FORM
+  > {}
 
 interface State {
   submitting: boolean;
@@ -79,22 +84,6 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
     }
   }, [form]);
 
-  const BackAction = () => {
-    const BackIcon: RenderProp<Partial<ImageProps>> = (props) => (
-      <Icon
-        {...props}
-        style={[props?.style, {transform: [{scaleX: isRTL ? -1 : 1}]}]}
-        name="arrow-back"
-      />
-    );
-    return (
-      <TopNavigationAction
-        icon={BackIcon}
-        onPress={() => navigation.goBack()}
-      />
-    );
-  };
-
   const onFormChange = (name: keyof UserProfile) => (nextValue: string) =>
     setForm((prev) => ({
       ...prev,
@@ -114,6 +103,7 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
         lastName: form.lastName,
         phoneNumber: form.phoneNumber,
       };
+      dispatch(GlobalActions.setRememberUser(state.saveDataOnSubmit));
       dispatch(
         UserActions.setUserProfileActionAsync.request({
           profile,
@@ -186,85 +176,77 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
   );
 
   return (
-    <ScreenContainer level="1">
-      <TopNavigation accessoryLeft={BackAction} />
-      <Divider />
-      <Layout style={styles.container}>
-        <ScrollView>
-          <Text category="h6">{I18n.t('signIn.userForm.caption')}</Text>
-          <Layout style={styles.form}>
-            <Input
-              autoFocus
-              ref={refs.current.firstName}
-              enablesReturnKeyAutomatically
-              keyboardType="default"
-              returnKeyType="next"
-              autoCorrect={false}
-              onSubmitEditing={onNext('firstName', 'lastName')}
-              style={styles.input}
-              value={form.firstName}
-              label={I18n.t('signIn.userForm.inputs.firstName.label')}
-              placeholder={I18n.t(
-                'signIn.userForm.inputs.firstName.placeholder',
-              )}
-              caption={
-                errors.firstName &&
-                I18n.t('signIn.userForm.inputs.firstName.errors.isRequired')
-              }
-              status={errors.firstName ? 'danger' : 'default'}
-              onChangeText={onFormChange('firstName')}
-            />
-            <Input
-              ref={refs.current.lastName}
-              enablesReturnKeyAutomatically
-              keyboardType="default"
-              returnKeyType="next"
-              autoCorrect={false}
-              onSubmitEditing={onNext('lastName', 'phoneNumber')}
-              style={styles.input}
-              value={form.lastName}
-              label={I18n.t('signIn.userForm.inputs.lastName.label')}
-              placeholder={I18n.t(
-                'signIn.userForm.inputs.lastName.placeholder',
-              )}
-              caption={
-                errors.lastName &&
-                I18n.t('signIn.userForm.inputs.lastName.errors.isRequired')
-              }
-              status={errors.lastName ? 'danger' : 'default'}
-              onChangeText={onFormChange('lastName')}
-            />
-            <Input
-              ref={refs.current.phoneNumber}
-              enablesReturnKeyAutomatically
-              keyboardType="phone-pad"
-              returnKeyType="next"
-              autoCorrect={false}
-              onSubmitEditing={openModal}
-              style={styles.input}
-              value={form.phoneNumber}
-              label={I18n.t('signIn.userForm.inputs.phoneNumber.label')}
-              placeholder={I18n.t(
-                'signIn.userForm.inputs.phoneNumber.placeholder',
-              )}
-              caption={
-                errors.phoneNumber &&
-                I18n.t('signIn.userForm.inputs.phoneNumber.errors.isRequired')
-              }
-              status={errors.phoneNumber ? 'danger' : 'default'}
-              onChangeText={onFormChange('phoneNumber')}
-            />
-            <CheckBox
-              style={styles.checkbox}
-              checked={state.saveDataOnSubmit}
-              onChange={(nextChecked) =>
-                setState((prev) => ({...prev, saveDataOnSubmit: nextChecked}))
-              }>
-              {I18n.t('signIn.userForm.inputs.rememberMe.label')}
-            </CheckBox>
-          </Layout>
-        </ScrollView>
-      </Layout>
+    <Layout style={styles.container}>
+      <ScrollView>
+        <Text category="h6">{I18n.t('signIn.userForm.caption')}</Text>
+        <Layout style={styles.form}>
+          <Input
+            autoFocus
+            ref={refs.current.firstName}
+            enablesReturnKeyAutomatically
+            keyboardType="default"
+            returnKeyType="next"
+            autoCorrect={false}
+            onSubmitEditing={onNext('firstName', 'lastName')}
+            style={styles.input}
+            value={form.firstName}
+            label={I18n.t('signIn.userForm.inputs.firstName.label')}
+            placeholder={I18n.t('signIn.userForm.inputs.firstName.placeholder')}
+            caption={
+              errors.firstName &&
+              I18n.t('signIn.userForm.inputs.firstName.errors.isRequired')
+            }
+            status={errors.firstName ? 'danger' : 'default'}
+            onChangeText={onFormChange('firstName')}
+          />
+          <Input
+            ref={refs.current.lastName}
+            enablesReturnKeyAutomatically
+            keyboardType="default"
+            returnKeyType="next"
+            autoCorrect={false}
+            onSubmitEditing={onNext('lastName', 'phoneNumber')}
+            style={styles.input}
+            value={form.lastName}
+            label={I18n.t('signIn.userForm.inputs.lastName.label')}
+            placeholder={I18n.t('signIn.userForm.inputs.lastName.placeholder')}
+            caption={
+              errors.lastName &&
+              I18n.t('signIn.userForm.inputs.lastName.errors.isRequired')
+            }
+            status={errors.lastName ? 'danger' : 'default'}
+            onChangeText={onFormChange('lastName')}
+          />
+          <Input
+            ref={refs.current.phoneNumber}
+            enablesReturnKeyAutomatically
+            keyboardType="phone-pad"
+            returnKeyType="next"
+            autoCorrect={false}
+            onSubmitEditing={openModal}
+            style={styles.input}
+            value={form.phoneNumber}
+            label={I18n.t('signIn.userForm.inputs.phoneNumber.label')}
+            placeholder={I18n.t(
+              'signIn.userForm.inputs.phoneNumber.placeholder',
+            )}
+            caption={
+              errors.phoneNumber &&
+              I18n.t('signIn.userForm.inputs.phoneNumber.errors.isRequired')
+            }
+            status={errors.phoneNumber ? 'danger' : 'default'}
+            onChangeText={onFormChange('phoneNumber')}
+          />
+          <CheckBox
+            style={styles.checkbox}
+            checked={state.saveDataOnSubmit}
+            onChange={(nextChecked) =>
+              setState((prev) => ({...prev, saveDataOnSubmit: nextChecked}))
+            }>
+            {I18n.t('signIn.userForm.inputs.rememberMe.label')}
+          </CheckBox>
+        </Layout>
+      </ScrollView>
       <Button
         style={styles.submitButton}
         status="primary"
@@ -278,7 +260,7 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
         onAgree={onSubmit}
         onDisagree={closeModal}
       />
-    </ScreenContainer>
+    </Layout>
   );
 };
 
