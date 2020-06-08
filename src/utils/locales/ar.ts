@@ -51,7 +51,6 @@ export default {
     refresh: 'إعادة تحميل',
     signIn: 'تسجيل الدخول',
     signOut: 'تسجيل الخروج',
-    SelectAnotherTime: 'اختيار وقت آخر',
     select: 'اختار',
     agree: 'موافق',
     disagree: 'لا أوافق',

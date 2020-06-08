@@ -1,6 +1,7 @@
 import {I18nManager, Platform} from 'react-native';
+import Moment from 'moment';
 // @ts-ignore
-import moment from 'moment/min/moment-with-locales';
+import momentWithLocales from 'moment/min/moment-with-locales';
 import RNRestart from 'react-native-restart';
 import I18n from 'react-native-i18n';
 import * as RNLocalize from 'react-native-localize';
@@ -15,6 +16,8 @@ if (Platform.OS === 'android') {
 import en from './locales/en';
 import de from './locales/de';
 import ar from './locales/ar';
+
+const moment: typeof Moment = momentWithLocales;
 
 RNLocalize.addEventListener('change', () => {
   RNRestart.Restart();

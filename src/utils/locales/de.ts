@@ -51,7 +51,6 @@ export default {
     refresh: 'Aktualisieren',
     signIn: 'Anmelden',
     signOut: 'Ausloggen',
-    SelectAnotherTime: 'Wählen Sie eine andere Zeit',
     select: 'Wählen',
     agree: 'Zustimmen',
     disagree: 'Nicht zustimmen',

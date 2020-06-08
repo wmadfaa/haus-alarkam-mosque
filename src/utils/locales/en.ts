@@ -51,7 +51,6 @@ export default {
     refresh: 'Refresh',
     signIn: 'Sign in',
     signOut: 'Sign out',
-    SelectAnotherTime: 'Select another time',
     select: 'Select',
     agree: 'Agree',
     disagree: 'Disagree',

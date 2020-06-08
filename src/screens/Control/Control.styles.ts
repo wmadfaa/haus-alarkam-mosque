@@ -24,4 +24,8 @@ export default StyleSheet.create({
   actionButton: {
     marginVertical: 4,
   },
+  indicator: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
