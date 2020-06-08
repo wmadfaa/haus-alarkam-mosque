@@ -25,6 +25,7 @@ import {ApplicationState} from '../store/index';
 import SignInScreen from '../screens/SignIn/SignIn';
 import UserScreen from '../screens/User/User';
 import ScreenContainer from '../components/ScreenContainer/ScreenContainer';
+import {ModalProvider} from '../components/Modal/Modal';
 
 const SignInStack = createStackNavigator<SignInStackParams>();
 
@@ -88,17 +89,22 @@ const SignInNavigator: React.FC<ScreenNavigationProp<
   }
 
   return (
-    <ScreenContainer level="1">
-      <TopNavigation accessoryLeft={BackAction} />
-      <Divider />
-      <SignInStack.Navigator headerMode="none">
-        <SignInStack.Screen name={ROUTES.SIGN_IN_USER} component={UserScreen} />
-        <SignInStack.Screen
-          name={ROUTES.SIGN_IN_FORM}
-          component={SignInScreen}
-        />
-      </SignInStack.Navigator>
-    </ScreenContainer>
+    <ModalProvider>
+      <ScreenContainer level="1">
+        <TopNavigation accessoryLeft={BackAction} />
+        <Divider />
+        <SignInStack.Navigator headerMode="none">
+          <SignInStack.Screen
+            name={ROUTES.SIGN_IN_USER}
+            component={UserScreen}
+          />
+          <SignInStack.Screen
+            name={ROUTES.SIGN_IN_FORM}
+            component={SignInScreen}
+          />
+        </SignInStack.Navigator>
+      </ScreenContainer>
+    </ModalProvider>
   );
 };
 

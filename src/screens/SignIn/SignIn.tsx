@@ -103,7 +103,6 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
         lastName: form.lastName,
         phoneNumber: form.phoneNumber,
       };
-      dispatch(GlobalActions.setRememberUser(state.saveDataOnSubmit));
       dispatch(
         UserActions.setUserProfileActionAsync.request({
           profile,
@@ -116,7 +115,8 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
   const onSubmitted = useCallback(() => {
     setState((prev) => ({...prev, submitting: false}));
     navigation.navigate(ROUTES.CONTROL);
-  }, [navigation]);
+    dispatch(GlobalActions.setRememberUser(state.saveDataOnSubmit));
+  }, [dispatch, navigation, state.saveDataOnSubmit]);
 
   useEffect(() => {
     if (!loading && state.submitting) {

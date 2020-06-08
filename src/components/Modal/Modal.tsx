@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Text, Button, Divider} from '@ui-kitten/components';
@@ -13,7 +13,26 @@ export interface ModalProps {
   onDisagree(): void;
 }
 
-const Modal: React.FC<ModalProps> = ({show = false, onAgree, onDisagree}) => {
+const initialModalContextValue = {
+  show: false,
+  onAgree: () => {},
+  onDisagree: () => {},
+};
+
+interface ModalContextValue {
+  props: ModalProps;
+  setProps: React.Dispatch<React.SetStateAction<ModalProps>>;
+}
+
+const ModalContext = React.createContext<ModalContextValue>({
+  props: initialModalContextValue,
+  setProps: () => {},
+});
+
+const ModalComponent: React.FC = () => {
+  const {
+    props: {show, onAgree, onDisagree},
+  } = useContext(ModalContext);
   if (!show) {
     return null;
   }
@@ -50,6 +69,27 @@ const Modal: React.FC<ModalProps> = ({show = false, onAgree, onDisagree}) => {
       </ScrollView>
     </BlurOverlay>
   );
+};
+
+export const ModalProvider: React.FC = ({children}) => {
+  const [props, setProps] = useState<ModalProps>(initialModalContextValue);
+
+  return (
+    <ModalContext.Provider value={{props, setProps}}>
+      {children}
+      <ModalComponent />
+    </ModalContext.Provider>
+  );
+};
+
+const Modal: React.FC<ModalProps> = (props) => {
+  const {setProps} = useContext(ModalContext);
+
+  useEffect(() => {
+    setProps(props);
+  }, [props, setProps]);
+
+  return null;
 };
 
 export default Modal;
