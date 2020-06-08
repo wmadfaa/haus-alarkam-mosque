@@ -221,9 +221,8 @@ const SignInScreen: React.FC<Props> = ({navigation, route}) => {
             ref={refs.current.phoneNumber}
             enablesReturnKeyAutomatically
             keyboardType="phone-pad"
-            returnKeyType="next"
+            returnKeyType="done"
             autoCorrect={false}
-            onSubmitEditing={openModal}
             style={styles.input}
             value={form.phoneNumber}
             label={I18n.t('signIn.userForm.inputs.phoneNumber.label')}

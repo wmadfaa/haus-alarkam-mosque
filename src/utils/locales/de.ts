@@ -41,6 +41,8 @@ export default {
       terms:
         'Durch die Gnade Allahs und von ihm und seiner Großzügigkeit ermächtigte er, seine Häuser in allen Gebeten und Freitagsgebeten zu betreten. Auch unter Einhaltung der Vorsichtsmaßnahmen des österreichischen Gesundheitsministeriums lauten sie wie folgt: Erstens: Jeder Anbeter nimmt an einem teil eigener Gebetsteppich. Zweitens: Jedes Serum wird beim Ein- und Aussteigen getragen (Maske) und kann während des Gebets entfernt werden. Er kann in der Moschee eine Waschung durchführen. Drittens: Jedes Serum möchte einen Abstand von 1 Meter zwischen ihm und anderen einhalten, der nicht geringer ist. Viertens: Es ist nicht zulässig, dass jemand, der Krankheitssymptome findet (Gott bewahre es), in die Moschee kommt, um die Sicherheit anderer zu gewährleisten !! Fünftens: Es gibt keine Einwände dagegen, die Kinder mitzubringen, vorausgesetzt, sie verbessern die Literatur der Moschee und verwirren die Anbeter nicht. Sechstens: Wer sich an diese Anweisungen hält, beabsichtigt, Gott zu gehorchen, indem er sein Zuhause bewahrt und den tugendhaften Mahasin ad-Din hervorhebt. Siebtens: Ihr Scharfsinn für das System ist ein Beweis für Ihren Glauben und eine großartige Manifestation Ihrer Religion. Stellen Sie also sicher, dass Gott Sie bewahrt. Passen Sie auf Sie auf und akzeptieren Sie uns und Sie! 💐🌴🌳🌷',
     },
+    reservationDate: 'Reservierungsdatum',
+    profile: 'Profil',
   },
   control: {
     info: {
@@ -54,5 +56,7 @@ export default {
     select: 'Wählen',
     agree: 'Zustimmen',
     disagree: 'Nicht zustimmen',
+    confirmReservation: 'Reservierung bestätigen',
+    deleteProfile: 'Profil löschen',
   },
 };

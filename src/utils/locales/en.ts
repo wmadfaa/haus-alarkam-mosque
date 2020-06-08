@@ -41,6 +41,8 @@ export default {
       terms:
         'By the grace of Allah, and from him and his generosity, he authorized to enter his homes in all prayers and Friday prayers Also with commitment to the precautions issued by the Austrian Ministry of Health, They are as follows: First: Every worshiper attends a prayer rug of his own. Second: Each serum is worn (Mask) during its entry and exit and it can be removed during prayer He can perform ablution in the mosque. Third: Each serum is keen to adhere to a distance of 1 A meter between him and others is not less than that. Fourth: It is not permissible for anyone who finds any Symptoms of illness (God forbid) may come to the mosque in order to ensure the safety of others !!. Fifth: There is no objection to bringing the children, provided that they improve the literature of the mosque And do not confuse the worshipers. Sixth: Whoever abides by these instructions intends Obedience to God by preserving his home and highlighting the virtuous Mahasin ad-Din. Seventh: Your keenness on the system is evidence of your faith and a great manifestation of your religion, so make sure that God preserves you Take care of you and accept us and you! 💐🌴🌳🌷',
     },
+    reservationDate: 'Reservation date',
+    profile: 'Profile',
   },
   control: {
     info: {
@@ -54,5 +56,7 @@ export default {
     select: 'Select',
     agree: 'Agree',
     disagree: 'Disagree',
+    confirmReservation: 'confirm reservation',
+    deleteProfile: 'delete profile',
   },
 };
