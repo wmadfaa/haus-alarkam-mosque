@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {Image, View, ImageProps} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Text, Button, Spinner} from '@ui-kitten/components';
@@ -30,15 +30,6 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
   const fetchData = useCallback(() => {
     dispatch(fridayPrayingActions.getFridayPrayingActionAsync.request());
   }, [dispatch]);
-
-  const cancelFetchingData = useCallback(() => {
-    dispatch(fridayPrayingActions.getFridayPrayingActionAsync.cancel());
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchData();
-    return cancelFetchingData;
-  }, [cancelFetchingData, fetchData]);
 
   const onRefresh = () => {
     fetchData();

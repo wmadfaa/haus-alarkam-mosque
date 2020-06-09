@@ -2,7 +2,6 @@ import React from 'react';
 import * as eva from '@eva-design/eva';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
-import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {Provider} from 'react-redux';
@@ -19,9 +18,7 @@ const App: React.FC = () => (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ApplicationProvider {...eva} theme={eva.light}>
-          <NavigationContainer>
-            <Navigator />
-          </NavigationContainer>
+          <Navigator />
         </ApplicationProvider>
       </PersistGate>
     </Provider>

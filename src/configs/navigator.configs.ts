@@ -1,4 +1,5 @@
 export enum ROUTES {
+  LOADING = 'loading',
   HOME = 'home',
   SIGN_IN = 'sign-in',
   SIGN_IN_FORM = 'sign-in/form',
@@ -16,6 +17,7 @@ export type SignInStackParams = {
 };
 
 export type MainStackParams = {
+  [ROUTES.LOADING]: undefined;
   [ROUTES.HOME]: undefined;
   [ROUTES.SIGN_IN]: {
     params: SignInParams;

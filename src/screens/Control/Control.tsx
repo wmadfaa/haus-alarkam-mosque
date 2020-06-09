@@ -59,7 +59,9 @@ const ControlScreen: React.FC<Props> = ({navigation}) => {
           {I18n.t('control.info.caption')}
         </Text>
         <Text category="h5">
-          {moment(`${nextFridayData} ${reservePrayingTime}`).fromNow(true)}
+          {reservePrayingTime && nextFridayData
+            ? moment(`${nextFridayData} ${reservePrayingTime}`).fromNow(true)
+            : ''}
         </Text>
       </Layout>
       <Layout level="1" style={styles.actions}>
