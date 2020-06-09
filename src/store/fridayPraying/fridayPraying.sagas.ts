@@ -5,7 +5,7 @@ import {
   fork,
   call,
   put,
-  takeLatest,
+  takeEvery,
   take,
   cancel,
   cancelled,
@@ -89,7 +89,7 @@ function* getFridayPrayingActionAsync() {
       }
     }
   }
-  const bgTask = yield takeLatest(
+  const bgTask = yield takeEvery(
     FridayPrayingActions.getFridayPrayingActionAsync.request,
     task,
   );
