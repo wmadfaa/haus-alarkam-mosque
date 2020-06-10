@@ -41,6 +41,7 @@ const UserScreen: React.FC<Props> = ({navigation, route}) => {
   const {
     user: {profile},
     global: {setUser, deleteUserProfile},
+    fridayPraying: {nextFridayData},
   } = useSelector((state: ApplicationState) => state);
 
   const handleConfirmReservation = useCallback(() => {
@@ -139,7 +140,9 @@ const UserScreen: React.FC<Props> = ({navigation, route}) => {
               </Text>
               <Text category="p1">
                 <Text category="s1">{I18n.t('signIn.reservationDate')}:</Text>{' '}
-                {moment(route.params.reservePrayingTime).calendar()}
+                {moment(
+                  `${nextFridayData} ${route.params.reservePrayingTime}`,
+                ).calendar()}
               </Text>
             </Layout>
           )}

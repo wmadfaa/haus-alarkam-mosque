@@ -1,15 +1,6 @@
 import AbortController from 'abort-controller';
 
-import {
-  all,
-  fork,
-  call,
-  put,
-  takeEvery,
-  take,
-  cancel,
-  cancelled,
-} from 'redux-saga/effects';
+import {all, call, put, takeEvery, cancelled} from 'redux-saga/effects';
 
 import * as api from '../../configs/api.configs';
 import {getTokenAsync} from '../common.sagas';
@@ -19,88 +10,74 @@ import * as FridayPrayingActions from './fridayPraying.actions';
 import * as userActions from '../user/user.actions';
 
 function* getFridayPrayingActionAsync() {
-  function* task() {
-    yield put(globalStateActions.resetState('getFridayPraying'));
-    yield put(globalStateActions.setLoadingState('getFridayPraying', true));
-    const controller = new AbortController();
-    const {signal} = controller;
+  yield put(globalStateActions.resetState('getFridayPraying'));
+  yield put(globalStateActions.setLoadingState('getFridayPraying', true));
+  const controller = new AbortController();
+  const {signal} = controller;
 
-    let token;
-    try {
-      token = yield call(getTokenAsync);
-    } catch (err) {}
-    try {
-      let data;
-      if (token) {
-        const {
-          data: {settings, prayer},
-        } = yield call(api.getFridayPrayingForUser, signal, {
-          token,
-        });
-        data = settings;
-        yield put(userActions.setUserToken(prayer.token));
-        yield put(
-          userActions.setUserProfileActionAsync.success({
-            profile: {
-              firstName: prayer.name.first,
-              lastName: prayer.name.last,
-              phoneNumber: prayer.phone,
-            },
-            reservePrayingTime: prayer.reservePrayingTime
-              ? prayer.reservePrayingTime
-              : null,
-            creatingUserProfileDate: prayer.updatedAt,
-          }),
-        );
-      } else {
-        const {
-          data: {settings, prayer},
-        } = yield call(api.getFridayPraying, signal);
-        data = settings;
-        yield put(userActions.setUserToken(prayer.token));
-      }
+  try {
+    let data;
+    const token = yield call(getTokenAsync);
+    if (token) {
+      const res = yield call(api.getFridayPrayingForUser, signal, {
+        token,
+      });
+      data = res.settings;
+      yield put(userActions.setUserToken(res.prayer.token));
       yield put(
-        FridayPrayingActions.getFridayPrayingActionAsync.success({
-          times: [
-            {
-              time: `${data.nextFridayData} ${data.firstPraying.time}`,
-              personSpaceLeft: data.firstPraying.personSpaceLeft,
-            },
-            {
-              time: `${data.nextFridayData} ${data.secondPraying.time}`,
-              personSpaceLeft: data.secondPraying.personSpaceLeft,
-            },
-          ],
-          nextFridayData: data.nextFridayData,
+        userActions.setUserProfileActionAsync.success({
+          profile: {
+            firstName: res.prayer.name.first,
+            lastName: res.prayer.name.last,
+            phoneNumber: res.prayer.phone,
+          },
+          reservePrayingTime: res.prayer.reservePrayingTime
+            ? res.prayer.reservePrayingTime
+            : null,
+          creatingUserProfileDate: res.prayer.updatedAt,
         }),
       );
+    } else {
+      const res = yield call(api.getFridayPraying, signal);
+      data = res.settings;
+      yield put(userActions.setUserToken(res.prayer.token));
+    }
+    yield put(
+      FridayPrayingActions.getFridayPrayingActionAsync.success({
+        times: [
+          {
+            time: `${data.nextFridayData} ${data.firstPraying.time}`,
+            personSpaceLeft: data.firstPraying.personSpaceLeft,
+          },
+          {
+            time: `${data.nextFridayData} ${data.secondPraying.time}`,
+            personSpaceLeft: data.secondPraying.personSpaceLeft,
+          },
+        ],
+        nextFridayData: data.nextFridayData,
+      }),
+    );
+    yield put(globalStateActions.setLoadingState('getFridayPraying', false));
+  } catch (err) {
+    yield put(FridayPrayingActions.getFridayPrayingActionAsync.failure());
+    yield put(globalStateActions.setLoadingState('getFridayPraying', false));
+    yield put(globalStateActions.setErrorState('getFridayPraying', err));
+  } finally {
+    if (yield cancelled()) {
+      controller.abort();
       yield put(globalStateActions.setLoadingState('getFridayPraying', false));
-    } catch (err) {
-      yield put(FridayPrayingActions.getFridayPrayingActionAsync.failure());
-      yield put(globalStateActions.setLoadingState('getFridayPraying', false));
-      yield put(globalStateActions.setErrorState('getFridayPraying', err));
-    } finally {
-      if (yield cancelled()) {
-        controller.abort();
-        yield put(
-          globalStateActions.setLoadingState('getFridayPraying', false),
-        );
-        yield put(globalStateActions.setCancelState('getFridayPraying', true));
-      }
+      yield put(globalStateActions.setCancelState('getFridayPraying', true));
     }
   }
-  const bgTask = yield takeEvery(
-    FridayPrayingActions.getFridayPrayingActionAsync.request,
-    task,
-  );
-
-  yield take(FridayPrayingActions.getFridayPrayingActionAsync.cancel);
-
-  yield cancel(bgTask);
 }
 
 function* rootSaga() {
-  yield all([fork(getFridayPrayingActionAsync)]);
+  yield all([
+    takeEvery(
+      FridayPrayingActions.getFridayPrayingActionAsync.request,
+      getFridayPrayingActionAsync,
+    ),
+  ]);
 }
 
 export {rootSaga as FridayPrayingRootSaga};

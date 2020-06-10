@@ -1,8 +1,8 @@
 import AbortController from 'abort-controller';
-import {call, put, all, takeEvery, cancelled} from 'redux-saga/effects';
+import {call, put, all, takeEvery, cancelled, select} from 'redux-saga/effects';
 
+import * as selectors from '../selectors';
 import * as api from '../../configs/api.configs';
-import {getTokenAsync} from '../common.sagas';
 
 import * as globalStateActions from '../globalState/globalState.actions';
 import * as userActions from './user.actions';
@@ -16,12 +16,26 @@ function* setUserProfileActionAsync({
   const {signal} = controller;
 
   try {
-    const token = yield call(getTokenAsync);
-    const {data} = yield call(api.createPrayer, signal, {
-      ...profile,
-      reservePrayingTime,
-      token,
-    });
+    const token: ReturnType<typeof selectors.getToken> = yield select(
+      selectors.getToken,
+    );
+    const userProfile: ReturnType<typeof selectors.getProfile> = yield select(
+      selectors.getProfile,
+    );
+    let data;
+    if (userProfile) {
+      data = yield call(api.updatePrayer, signal, {
+        ...profile,
+        reservePrayingTime,
+        token,
+      });
+    } else {
+      data = yield call(api.createPrayer, signal, {
+        ...profile,
+        reservePrayingTime,
+        token,
+      });
+    }
     yield put(
       userActions.setUserProfileActionAsync.success({
         profile: {
@@ -55,8 +69,10 @@ function* updateUserProfileActionAsync({
   const {signal} = controller;
 
   try {
-    const token = yield call(getTokenAsync);
-    const {data} = yield call(api.updatePrayer, signal, {
+    const token: ReturnType<typeof selectors.getToken> = yield select(
+      selectors.getToken,
+    );
+    const data = yield call(api.updatePrayer, signal, {
       ...profile,
       token,
     });
@@ -91,7 +107,9 @@ function* deleteUserProfileActionAsync() {
   const {signal} = controller;
 
   try {
-    const token = yield call(getTokenAsync);
+    const token: ReturnType<typeof selectors.getToken> = yield select(
+      selectors.getToken,
+    );
     yield call(api.deletePrayer, signal, {
       token,
     });
@@ -118,9 +136,15 @@ function* cancelPrayingReservationActionAsync() {
   const {signal} = controller;
 
   try {
-    const token = yield call(getTokenAsync);
-    const {data} = yield call(api.updatePrayer, signal, {
-      reservePrayingTime: null,
+    const token: ReturnType<typeof selectors.getToken> = yield select(
+      selectors.getToken,
+    );
+    const profile: ReturnType<typeof selectors.getProfile> = yield select(
+      selectors.getProfile,
+    );
+    const data = yield call(api.updatePrayer, signal, {
+      ...(profile || {}),
+      reservePrayingTime: '',
       token,
     });
     yield put(

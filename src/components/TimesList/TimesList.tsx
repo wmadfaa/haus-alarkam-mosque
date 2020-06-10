@@ -1,4 +1,5 @@
 import React from 'react';
+import momentJs from 'moment';
 import I18n, {moment, localNumber} from '../../utils/i18n';
 import {
   Button,
@@ -21,7 +22,7 @@ export interface TimesListProps {
 
 const TimesList: React.FC<TimesListProps> = ({times, onSelect, isLoading}) => {
   const renderItem: ListRenderItem<FridayPrayingTime> = ({item, index}) => {
-    const handleOnPress = () => onSelect(item.time);
+    const handleOnPress = () => onSelect(momentJs(item.time).format('HH:mm'));
 
     const renderItemAccessory = () => (
       <Button
