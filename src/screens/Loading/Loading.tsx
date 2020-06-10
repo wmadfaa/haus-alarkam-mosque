@@ -47,17 +47,9 @@ const LoadingScreen: React.FC<Props> = ({navigation}) => {
     dispatch(fridayPrayingActions.getFridayPrayingActionAsync.request());
   }, [dispatch]);
 
-  // const cancelFetchingData = useCallback(() => {
-  //   dispatch(fridayPrayingActions.getFridayPrayingActionAsync.cancel());
-  //   setState((prev) => ({...prev, fetchingFridayPrayingData: false}));
-  // }, [dispatch]);
-
   useFocusEffect(
     useCallback(() => {
       fetchData();
-      // return () => {
-      //   cancelFetchingData();
-      // };
     }, [fetchData]),
   );
 
@@ -78,15 +70,18 @@ const LoadingScreen: React.FC<Props> = ({navigation}) => {
   );
 
   const navigateToInitialScreen = useCallback(() => {
-    if (
-      reservePrayingTime &&
-      nextFridayData &&
-      !isDateInThePast(`${nextFridayData} ${reservePrayingTime}`)
-    ) {
-      navigation.navigate(ROUTES.CONTROL);
-    } else {
-      navigation.navigate(ROUTES.HOME);
-    }
+    const timeOut = setTimeout(() => {
+      if (
+        reservePrayingTime &&
+        nextFridayData &&
+        !isDateInThePast(`${nextFridayData} ${reservePrayingTime}`)
+      ) {
+        navigation.navigate(ROUTES.CONTROL);
+      } else {
+        navigation.navigate(ROUTES.HOME);
+      }
+      clearTimeout(timeOut);
+    }, 1000 * 3); // 3 seconds
   }, [navigation, nextFridayData, reservePrayingTime]);
 
   useFocusEffect(
